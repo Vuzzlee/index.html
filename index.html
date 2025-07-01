@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Yasaklı Mod/Hile Tarayıcı</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card h2 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .file-input-container {
+            margin-bottom: 20px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .file-input-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .selected-files {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f7fafc;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .scan-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .scan-btn:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results {
+            margin-top: 30px;
+        }
+
+        .results-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-card.total {
+            border-left: 4px solid #667eea;
+        }
+
+        .summary-card.banned {
+            border-left: 4px solid #f56565;
+        }
+
+        .summary-card.unknown {
+            border-left: 4px solid #ed8936;
+        }
+
+        .summary-card.clean {
+            border-left: 4px solid #48bb78;
+        }
+
+        .summary-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .summary-label {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .mod-list {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .mod-list h3 {
+            padding: 15px 20px;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .mod-list.banned h3 {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .mod-list.unknown h3 {
+            background: #feebc8;
+            color: #c05621;
+        }
+
+        .mod-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .mod-item:last-child {
+            border-bottom: none;
+        }
+
+        .mod-info {
+            flex: 1;
+        }
+
+        .mod-name {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .mod-details {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .mod-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .mod-status.banned {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .mod-status.unknown {
+            background: #feebc8;
+            color: #c05621;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+        }
+
+        .spinner {
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .results-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Minecraft Mod/Hile Tarayıcı</h1>
+            <p>Yasaklı ve şüpheli modları/Hile tespit edin</p>
+        </div>
+
+        <div class="main-content">
+            <div class="card">
+                <h2>📁 Dosya Seçimi</h2>
+                <div class="file-input-container">
+                    <div class="file-input-wrapper">
+                        <input type="file" id="fileInput" class="file-input" multiple accept=".jar,.zip" webkitdirectory>
+                        <label for="fileInput" class="file-input-label">
+                            📂 Klasör Seç (Mods Klasörü)
+                        </label>
+                    </div>
+                    <div id="selectedFiles" class="selected-files hidden">
+                        <strong>Seçilen dosyalar:</strong>
+                        <div id="fileList"></div>
+                    </div>
+                </div>
+                
+                <div class="file-input-container">
+                    <div class="file-input-wrapper">
+                        <input type="file" id="individualFiles" class="file-input" multiple accept=".jar,.zip">
+                        <label for="individualFiles" class="file-input-label">
+                            📄 Tek Tek Dosya Seç
+                        </label>
+                    </div>
+                </div>
+
+                <button id="scanBtn" class="scan-btn" disabled>
+                    🔍 Taramayı Başlat
+                </button>
+            </div>
+
+            <div class="card">
+                <h2>ℹ️ Tarama Bilgileri</h2>
+                <p><strong>Taranacak Mod Türleri:</strong></p>
+                <ul style="margin: 15px 0; padding-left: 20px; color: #718096;">
+                    <li>Hack Clientler (Wurst, Meteor, vb.)</li>
+                    <li>Cheat Modlar (X-Ray, Fly, vb.)</li>
+                    <li>Yasaklı Yardımcı Modlar</li>
+                    <li>Bilinmeyen/Şüpheli Dosyalar</li>
+                </ul>
+                
+                <p><strong>Desteklenen Formatlar:</strong></p>
+                <ul style="margin: 15px 0; padding-left: 20px; color: #718096;">
+                    <li>.jar dosyaları</li>
+                    <li>.zip dosyaları</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="scanProgress" class="hidden">
+            <div class="card">
+                <h2>⏳ Tarama Devam Ediyor...</h2>
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <div id="progressText" class="loading">Dosyalar analiz ediliyor...</div>
+            </div>
+        </div>
+
+        <div id="results" class="results hidden">
+            <div class="results-summary">
+                <div class="summary-card total">
+                    <div id="totalCount" class="summary-number">0</div>
+                    <div class="summary-label">Toplam Dosya</div>
+                </div>
+                <div class="summary-card banned">
+                    <div id="bannedCount" class="summary-number">0</div>
+                    <div class="summary-label">Yasaklı Mod</div>
+                </div>
+                <div class="summary-card unknown">
+                    <div id="unknownCount" class="summary-number">0</div>
+                    <div class="summary-label">Şüpheli Mod</div>
+                </div>
+                <div class="summary-card clean">
+                    <div id="cleanCount" class="summary-number">0</div>
+                    <div class="summary-label">Temiz Dosya</div>
+                </div>
+            </div>
+
+            <div id="bannedMods" class="mod-list banned hidden">
+                <h3>🚫 Yasaklı Modlar</h3>
+                <div id="bannedList"></div>
+            </div>
+
+            <div id="unknownMods" class="mod-list unknown hidden">
+                <h3>⚠️ Şüpheli Modlar</h3>
+                <div id="unknownList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const bannedMods = [
+            { name: "Wurst Client", keywords: ["wurst"] },
+            { name: "Meteor Client", keywords: ["meteor"] },
+            { name: "Aristois", keywords: ["aristois"] },
+            { name: "Inertia Client", keywords: ["inertia"] },
+            { name: "LiquidBounce", keywords: ["liquidbounce", "liquid"] },
+            { name: "Vape Client", keywords: ["vape"] },
+            { name: "Impact Client", keywords: ["impact"] },
+            { name: "Wolfram Client", keywords: ["wolfram"] },
+            { name: "Ares Client", keywords: ["ares"] },
+            { name: "Rise Client", keywords: ["rise"] },
+            { name: "Sigma Client", keywords: ["sigma"] },
+            { name: "Baritone", keywords: ["baritone"] },
+            { name: "Future Client", keywords: ["future"] },
+            { name: "BleachHack", keywords: ["bleach"] },
+            { name: "X-Ray", keywords: ["xray", "x-ray"] },
+            { name: "Fly Mod", keywords: ["fly", "flymod"] },
+            { name: "Speed Hack", keywords: ["speed", "speedhack"] },
+            { name: "Kill Aura", keywords: ["killaura", "aura"] },
+            { name: "Auto Clicker", keywords: ["autoclicker", "autoclick"] },
+            { name: "ESP", keywords: ["esp", "wallhack"] },
+            { name: "Freecam", keywords: ["freecam", "camera"] },
+            { name: "Mouse Tweaks", keywords: ["mousetweakss", "mouse"] }
+        ];
+
+        const allowedMods = [
+            "optifine", "forge", "fabric", "quilt", "jei", "nei", "waila", "hwyla",
+            "journeymap", "minimap", "iron", "tinkers", "thermal", "buildcraft",
+            "applied", "storage", "refined", "mekanism", "forestry", "railcraft"
+        ];
+
+        let allFiles = [];
+        let scanResults = {
+            total: 0,
+            banned: [],
+            unknown: [],
+            clean: []
+        };
+
+        document.getElementById('fileInput').addEventListener('change', handleFolderSelect);
+        document.getElementById('individualFiles').addEventListener('change', handleIndividualFiles);
+        document.getElementById('scanBtn').addEventListener('click', startScan);
+
+        function handleFolderSelect(event) {
+            const files = Array.from(event.target.files);
+            updateFileList(files);
+        }
+
+        function handleIndividualFiles(event) {
+            const files = Array.from(event.target.files);
+            allFiles = [...allFiles, ...files];
+            updateFileDisplay();
+        }
+
+        function updateFileList(files) {
+            allFiles = files.filter(file => 
+                file.name.endsWith('.jar') || file.name.endsWith('.zip')
+            );
+            updateFileDisplay();
+        }
+
+        function updateFileDisplay() {
+            const selectedFiles = document.getElementById('selectedFiles');
+            const fileList = document.getElementById('fileList');
+            const scanBtn = document.getElementById('scanBtn');
+
+            if (allFiles.length > 0) {
+                selectedFiles.classList.remove('hidden');
+                fileList.innerHTML = `${allFiles.length} dosya seçildi (${allFiles.filter(f => f.name.endsWith('.jar')).length} .jar, ${allFiles.filter(f => f.name.endsWith('.zip')).length} .zip)`;
+                scanBtn.disabled = false;
+            } else {
+                selectedFiles.classList.add('hidden');
+                scanBtn.disabled = true;
+            }
+        }
+
+        function startScan() {
+            if (allFiles.length === 0) return;
+
+            // Reset results
+            scanResults = { total: 0, banned: [], unknown: [], clean: [] };
+            
+            // Show progress
+            document.getElementById('scanProgress').classList.remove('hidden');
+            document.getElementById('results').classList.add('hidden');
+            
+            // Simulate scanning process
+            simulateScan();
+        }
+
+        function simulateScan() {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            let processed = 0;
+            const totalFiles = allFiles.length;
+            
+            function processFile(index) {
+                if (index >= totalFiles) {
+                    // Scanning complete
+                    setTimeout(() => {
+                        document.getElementById('scanProgress').classList.add('hidden');
+                        displayResults();
+                    }, 500);
+                    return;
+                }
+
+                const file = allFiles[index];
+                const fileName = file.name.toLowerCase();
+                
+                // Check if banned
+                let isBanned = false;
+                let bannedModName = '';
+                
+                for (const mod of bannedMods) {
+                    if (mod.keywords.some(keyword => fileName.includes(keyword))) {
+                        isBanned = true;
+                        bannedModName = mod.name;
+                        break;
+                    }
+                }
+                
+                if (isBanned) {
+                    scanResults.banned.push({
+                        fileName: file.name,
+                        modName: bannedModName,
+                        size: file.size
+                    });
+                } else {
+                    // Check if it's a known allowed mod
+                    const isKnown = allowedMods.some(mod => fileName.includes(mod));
+                    
+                    if (isKnown) {
+                        scanResults.clean.push({
+                            fileName: file.name,
+                            size: file.size
+                        });
+                    } else {
+                        scanResults.unknown.push({
+                            fileName: file.name,
+                            size: file.size
+                        });
+                    }
+                }
+                
+                processed++;
+                scanResults.total = processed;
+                
+                const progress = (processed / totalFiles) * 100;
+                progressFill.style.width = progress + '%';
+                progressText.textContent = `${processed}/${totalFiles} dosya analiz edildi...`;
+                
+                // Continue with next file
+                setTimeout(() => processFile(index + 1), 50);
+            }
+            
+            processFile(0);
+        }
+
+        function displayResults() {
+            document.getElementById('results').classList.remove('hidden');
+            
+            // Update summary
+            document.getElementById('totalCount').textContent = scanResults.total;
+            document.getElementById('bannedCount').textContent = scanResults.banned.length;
+            document.getElementById('unknownCount').textContent = scanResults.unknown.length;
+            document.getElementById('cleanCount').textContent = scanResults.clean.length;
+            
+            // Display banned mods
+            if (scanResults.banned.length > 0) {
+                document.getElementById('bannedMods').classList.remove('hidden');
+                const bannedList = document.getElementById('bannedList');
+                bannedList.innerHTML = scanResults.banned.map(mod => `
+                    <div class="mod-item">
+                        <div class="mod-info">
+                            <div class="mod-name">${mod.modName}</div>
+                            <div class="mod-details">${mod.fileName} (${formatFileSize(mod.size)})</div>
+                        </div>
+                        <div class="mod-status banned">Yasaklı</div>
+                    </div>
+                `).join('');
+            }
+            
+            // Display unknown mods
+            if (scanResults.unknown.length > 0) {
+                document.getElementById('unknownMods').classList.remove('hidden');
+                const unknownList = document.getElementById('unknownList');
+                unknownList.innerHTML = scanResults.unknown.map(mod => `
+                    <div class="mod-item">
+                        <div class="mod-info">
+                            <div class="mod-name">${mod.fileName}</div>
+                            <div class="mod-details">Bilinmeyen mod (${formatFileSize(mod.size)})</div>
+                        </div>
+                        <div class="mod-status unknown">Şüpheli</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    </script>
+</body>
+</html>
