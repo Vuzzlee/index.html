@@ -312,6 +312,59 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Discord Section Styles */
+        .discord-section {
+            margin-top: 40px;
+            background: rgba(30, 30, 30, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(123, 31, 162, 0.2);
+        }
+
+        .discord-title {
+            color: #bb86fc;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .discord-description {
+            color: #b0b0b0;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .discord-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
+        }
+
+        .discord-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.4);
+            background: linear-gradient(135deg, #4752c4 0%, #5865f2 100%);
+        }
+
+        .discord-icon {
+            width: 24px;
+            height: 24px;
+        }
+
         @media (max-width: 768px) {
             .main-content {
                 grid-template-columns: 1fr;
@@ -323,6 +376,14 @@
             
             .results-summary {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .discord-section {
+                padding: 20px;
+            }
+
+            .discord-title {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -341,7 +402,7 @@
                     <div class="file-input-wrapper">
                         <input type="file" id="fileInput" class="file-input" multiple accept=".jar,.zip" webkitdirectory>
                         <label for="fileInput" class="file-input-label">
-                            📂 Klasör Seç (Mods Klasörü)
+                            📂 Klasör Seç (.minecraft Klasorunu Tarayınız)
                         </label>
                     </div>
                     <div id="selectedFiles" class="selected-files hidden">
@@ -419,6 +480,26 @@
                 <h3>⚠️ Şüpheli Modlar</h3>
                 <div id="unknownList"></div>
             </div>
+        </div>
+
+        <!-- Discord İletişim Bölümü -->
+        <div class="discord-section">
+            <h2 class="discord-title">
+                <svg class="discord-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                </svg>
+                İletişim & Destek
+            </h2>
+            <p class="discord-description">
+                Sorularınız mı var? Yardıma mı ihtiyacınız var? Discord sunucumuzda bizimle iletişime geçin! 
+                Minecraft mod taraması hakkında sorularınızı sorabilir, önerilerinizi paylaşabilir ve toplulukla etkileşimde bulunabilirsiniz.
+            </p>
+            <a href="https://discord.gg/YOURDİSCORDİNVİTE" class="discord-button" target="_blank" rel="noopener noreferrer">
+                <svg class="discord-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                </svg>
+                Discord Sunucumuza Katıl
+            </a>
         </div>
     </div>
 
@@ -604,34 +685,4 @@
                             <div class="mod-name">${mod.modName}</div>
                             <div class="mod-details">${mod.fileName} (${formatFileSize(mod.size)})</div>
                         </div>
-                        <div class="mod-status banned">Yasaklı</div>
-                    </div>
-                `).join('');
-            }
-            
-            // Display unknown mods
-            if (scanResults.unknown.length > 0) {
-                document.getElementById('unknownMods').classList.remove('hidden');
-                const unknownList = document.getElementById('unknownList');
-                unknownList.innerHTML = scanResults.unknown.map(mod => `
-                    <div class="mod-item">
-                        <div class="mod-info">
-                            <div class="mod-name">${mod.fileName}</div>
-                            <div class="mod-details">Bilinmeyen mod (${formatFileSize(mod.size)})</div>
-                        </div>
-                        <div class="mod-status unknown">Şüpheli</div>
-                    </div>
-                `).join('');
-            }
-        }
-
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-    </script>
-</body>
-</html>
+                        <div class="mo
