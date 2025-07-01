@@ -13,9 +13,9 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #121212;
             min-height: 100vh;
-            color: #333;
+            color: #e0e0e0;
         }
 
         .container {
@@ -27,22 +27,22 @@
         .header {
             text-align: center;
             margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(40, 0, 60, 0.5);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(123, 31, 162, 0.3);
         }
 
         .header h1 {
             font-size: 2.5rem;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            color: #bb86fc;
+            text-shadow: 0 0 10px rgba(187, 134, 252, 0.3);
             margin-bottom: 10px;
         }
 
         .header p {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(200, 200, 200, 0.8);
             font-size: 1.1rem;
         }
 
@@ -54,18 +54,18 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(30, 30, 30, 0.95);
             border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(123, 31, 162, 0.2);
         }
 
         .card h2 {
-            color: #4a5568;
+            color: #bb86fc;
             margin-bottom: 20px;
             font-size: 1.5rem;
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 2px solid #3700b3;
             padding-bottom: 10px;
         }
 
@@ -88,7 +88,7 @@
         .file-input-label {
             display: block;
             padding: 15px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #3700b3 0%, #6200ee 100%);
             color: white;
             border-radius: 8px;
             cursor: pointer;
@@ -99,22 +99,24 @@
 
         .file-input-label:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(123, 31, 162, 0.4);
+            background: linear-gradient(135deg, #6200ee 0%, #3700b3 100%);
         }
 
         .selected-files {
             margin-top: 15px;
             padding: 10px;
-            background: #f7fafc;
+            background: rgba(30, 30, 30, 0.8);
             border-radius: 8px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #bb86fc;
+            color: #e0e0e0;
         }
 
         .scan-btn {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            color: white;
+            background: linear-gradient(135deg, #03dac6 0%, #018786 100%);
+            color: #000000;
             border: none;
             border-radius: 8px;
             font-size: 1.1rem;
@@ -125,11 +127,12 @@
 
         .scan-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(3, 218, 198, 0.4);
         }
 
         .scan-btn:disabled {
-            background: #a0aec0;
+            background: #424242;
+            color: #757575;
             cursor: not-allowed;
             transform: none;
         }
@@ -146,27 +149,28 @@
         }
 
         .summary-card {
-            background: white;
+            background: rgba(30, 30, 30, 0.9);
             padding: 20px;
             border-radius: 10px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            color: #e0e0e0;
         }
 
         .summary-card.total {
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #bb86fc;
         }
 
         .summary-card.banned {
-            border-left: 4px solid #f56565;
+            border-left: 4px solid #cf6679;
         }
 
         .summary-card.unknown {
-            border-left: 4px solid #ed8936;
+            border-left: 4px solid #ffa000;
         }
 
         .summary-card.clean {
-            border-left: 4px solid #48bb78;
+            border-left: 4px solid #03dac6;
         }
 
         .summary-number {
@@ -175,17 +179,34 @@
             margin-bottom: 5px;
         }
 
+        .summary-card.total .summary-number {
+            color: #bb86fc;
+        }
+
+        .summary-card.banned .summary-number {
+            color: #cf6679;
+        }
+
+        .summary-card.unknown .summary-number {
+            color: #ffa000;
+        }
+
+        .summary-card.clean .summary-number {
+            color: #03dac6;
+        }
+
         .summary-label {
-            color: #718096;
+            color: #b0b0b0;
             font-size: 0.9rem;
         }
 
         .mod-list {
-            background: white;
+            background: rgba(30, 30, 30, 0.9);
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             margin-bottom: 20px;
+            border: 1px solid rgba(123, 31, 162, 0.2);
         }
 
         .mod-list h3 {
@@ -195,20 +216,20 @@
         }
 
         .mod-list.banned h3 {
-            background: #fed7d7;
-            color: #c53030;
+            background: rgba(207, 102, 121, 0.2);
+            color: #cf6679;
         }
 
         .mod-list.unknown h3 {
-            background: #feebc8;
-            color: #c05621;
+            background: rgba(255, 160, 0, 0.2);
+            color: #ffa000;
         }
 
         .mod-item {
             padding: 15px 20px;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid #333333;
             display: flex;
-            justify-content: between;
+            justify-content: space-between;
             align-items: center;
         }
 
@@ -222,12 +243,12 @@
 
         .mod-name {
             font-weight: 600;
-            color: #2d3748;
+            color: #ffffff;
             margin-bottom: 5px;
         }
 
         .mod-details {
-            color: #718096;
+            color: #b0b0b0;
             font-size: 0.9rem;
         }
 
@@ -239,19 +260,21 @@
         }
 
         .mod-status.banned {
-            background: #fed7d7;
-            color: #c53030;
+            background: rgba(207, 102, 121, 0.2);
+            color: #cf6679;
+            border: 1px solid #cf6679;
         }
 
         .mod-status.unknown {
-            background: #feebc8;
-            color: #c05621;
+            background: rgba(255, 160, 0, 0.2);
+            color: #ffa000;
+            border: 1px solid #ffa000;
         }
 
         .progress-bar {
             width: 100%;
             height: 8px;
-            background: #e2e8f0;
+            background: #333333;
             border-radius: 4px;
             overflow: hidden;
             margin: 15px 0;
@@ -259,7 +282,7 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(90deg, #3700b3 0%, #bb86fc 100%);
             width: 0%;
             transition: width 0.3s ease;
         }
@@ -271,12 +294,12 @@
         .loading {
             text-align: center;
             padding: 20px;
-            color: #718096;
+            color: #b0b0b0;
         }
 
         .spinner {
-            border: 3px solid #e2e8f0;
-            border-top: 3px solid #667eea;
+            border: 3px solid #333333;
+            border-top: 3px solid #bb86fc;
             border-radius: 50%;
             width: 30px;
             height: 30px;
@@ -344,7 +367,7 @@
             <div class="card">
                 <h2>ℹ️ Tarama Bilgileri</h2>
                 <p><strong>Taranacak Mod Türleri:</strong></p>
-                <ul style="margin: 15px 0; padding-left: 20px; color: #718096;">
+                <ul style="margin: 15px 0; padding-left: 20px; color: #b0b0b0;">
                     <li>Hack Clientler (Wurst, Meteor, vb.)</li>
                     <li>Cheat Modlar (X-Ray, Fly, vb.)</li>
                     <li>Yasaklı Yardımcı Modlar</li>
@@ -352,7 +375,7 @@
                 </ul>
                 
                 <p><strong>Desteklenen Formatlar:</strong></p>
-                <ul style="margin: 15px 0; padding-left: 20px; color: #718096;">
+                <ul style="margin: 15px 0; padding-left: 20px; color: #b0b0b0;">
                     <li>.jar dosyaları</li>
                     <li>.zip dosyaları</li>
                 </ul>
